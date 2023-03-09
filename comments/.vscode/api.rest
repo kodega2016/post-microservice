@@ -1,0 +1,13 @@
+@BASE_URL=http://localhost:4001
+
+### get all the comments of a post
+GET {{BASE_URL}}/posts/1/comments 
+content-type: application/json
+
+### add new comment to post
+POST {{BASE_URL}}/posts/1/comments 
+content-type: application/json
+
+{
+  "content":"Nice article, I like it"
+}
