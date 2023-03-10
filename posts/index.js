@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const axios = require("axios");
 const { randomBytes } = require("crypto");
 
 require("colors");
@@ -30,10 +31,32 @@ app.post("/posts", (req, res) => {
     title,
     content,
   };
+
+  // trigger event
+  axios.post("http://localhost:4005/events", {
+    type: "PostCreated",
+    data: {
+      id,
+      title,
+      content,
+    },
+  });
+
   res.status(201).json({
     data: posts,
     message: "post created successfully",
     success: true,
+  });
+});
+
+app.post("/events", (req, res) => {
+  const { type, data } = req.body;
+  console.log(type, data);
+
+  res.status(200).send({
+    data: null,
+    success: true,
+    message: "Events received successfully",
   });
 });
 

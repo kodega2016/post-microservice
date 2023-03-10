@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const axios = require("axios");
 
 const { randomBytes } = require("crypto");
 require("colors");
@@ -35,12 +36,34 @@ app.post("/posts/:id/comments", (req, res) => {
     content,
   });
 
+  // trigger event
+  axios.post("http://localhost:4005/events", {
+    type: "CommentCreated",
+    data: {
+      id: commentID,
+      content,
+      postID: id,
+    },
+  });
+
   commentsByPost[id] = comments;
 
   res.status(200).json({
     data: commentsByPost[id],
     success: true,
     message: "comments added successfully",
+  });
+});
+
+app.post("/events", (req, res) => {
+  const { type, data } = req.body;
+
+  console.log(type, data);
+
+  res.status(200).json({
+    data: null,
+    success: true,
+    message: "events received successfully",
   });
 });
 
