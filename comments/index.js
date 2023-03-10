@@ -34,6 +34,7 @@ app.post("/posts/:id/comments", (req, res) => {
   comments.push({
     id: commentID,
     content,
+    status: "pending",
   });
 
   // trigger event
@@ -43,6 +44,7 @@ app.post("/posts/:id/comments", (req, res) => {
       id: commentID,
       content,
       postID: id,
+      status: "pending",
     },
   });
 
