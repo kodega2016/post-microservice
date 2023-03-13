@@ -12,9 +12,18 @@ app.post("/events", (req, res) => {
   console.log("Received Event", req.body.type);
   const event = req.body;
   events.push(event);
-  axios.post("http://localhost:4000/events", event).catch(e=>console.log(e.message));
-  axios.post("http://localhost:4001/events", event).catch(e=>console.log(e.message));
-  axios.post("http://localhost:4002/events", event).catch(e=>console.log(e.message));
+  axios
+    .post("http://localhost:4000/events", event)
+    .catch((e) => console.log(e.message));
+  axios
+    .post("http://localhost:4001/events", event)
+    .catch((e) => console.log(e.message));
+  axios
+    .post("http://localhost:4002/events", event)
+    .catch((e) => console.log(e.message));
+  axios
+    .post("http://localhost:4003/events", event)
+    .catch((e) => console.log(e.message));
 
   res.status(200).send({
     data: null,

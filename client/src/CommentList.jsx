@@ -19,7 +19,7 @@ export default function CommentList({ comments }) {
       <ul>
         {Object.values(comments).map((comment) => (
           <li key={comment.id}>
-            <p>{comment.content}</p>
+            <p>{comment.content} <span class="badge text-bg-success">{comment.status}</span></p>
           </li>
         ))}
       </ul>

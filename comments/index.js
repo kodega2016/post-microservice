@@ -60,6 +60,24 @@ app.post("/posts/:id/comments", (req, res) => {
 app.post("/events", (req, res) => {
   const { type, data } = req.body;
 
+  if (type === "CommentModerated") {
+    const { id, postID, status, content } = data;
+    const comments = commentsByPost[postID];
+    const comment = comments.find((comment) => comment.id === id);
+    comment.status = status;
+
+    // trigger event
+    axios.post("http://localhost:4005/events", {
+      type: "CommentUpdated",
+      data: {
+        id,
+        postID,
+        status,
+        content,
+      },
+    });
+  }
+
   console.log(type, data);
 
   res.status(200).json({
